@@ -16,9 +16,11 @@
         @keyframes bounce{0%,100%{transform:translateY(-25%);animation-timing-function:cubic-bezier(.8,0,1,1)}50%{transform:none;animation-timing-function:cubic-bezier(0,0,.2,1)}}
         @keyframes pulseGlow{0%,100%{opacity:.3}50%{opacity:.6}}
         @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+        @keyframes imgIn{from{opacity:0;transform:scale(.92) translateY(12px)}to{opacity:1;transform:scale(1) translateY(0)}}
         .anim-clip{animation:clipInUp 1.2s cubic-bezier(.16,1,.3,1) both}
         .anim-fade{animation:fadeIn .6s ease both}
         .anim-bar{animation:barFill 1s cubic-bezier(.16,1,.3,1) both}
+        .anim-img{animation:imgIn .8s cubic-bezier(.16,1,.3,1) both}
         .d1{animation-delay:.1s}.d2{animation-delay:.2s}.d3{animation-delay:.3s}.d4{animation-delay:.4s}.d5{animation-delay:.5s}.d7{animation-delay:.7s}.d10{animation-delay:1s}
         .loading-dot{animation:bounce 1s infinite}
         .loading-dot:nth-child(2){animation-delay:.15s}
@@ -35,10 +37,8 @@
         .bar-illogical{background:linear-gradient(90deg,#4ade80,#22c55e)}
         .bar-charm{background:linear-gradient(90deg,#f472b6,#ec4899)}
         .bar-annoying{background:linear-gradient(90deg,#78716c,#57534e)}
-        .result-img-main{width:11rem;height:11rem;border-radius:1rem;object-fit:cover;animation:float 4s ease-in-out infinite}
-        @media(min-width:768px){.result-img-main{width:13rem;height:13rem}}
-        .result-img-banner{width:100%;height:11rem;border-radius:.75rem;object-fit:cover}
-        @media(min-width:768px){.result-img-banner{height:11rem}}
+        .result-img{border:2px solid #262626;transition:border-color .4s,box-shadow .4s}
+        .result-img:hover{box-shadow:0 0 40px -10px var(--rc,#f43f5e)}
         ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:#333;border-radius:2px}
         .q-area{transition:opacity .3s ease,transform .3s cubic-bezier(.16,1,.3,1)}
         .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);padding:.75rem 1.5rem;background:#262626;color:#e5e5e5;font-size:.75rem;border-radius:.5rem;z-index:999;animation:fadeIn .3s ease}
@@ -115,6 +115,7 @@
     </div>
 
 <script>
+
 const questions = [
     {
         text: "你的队友在团战中残血了，你会？",
@@ -458,7 +459,7 @@ function showResult(type) {
     const r = results[type];
     const m = resultMeta[type];
     const c = m.color;
-    const key = type.toLowerCase();
+    const imgPath = "./images/" + type.toLowerCase() + ".png";
 
     let dimHTML = "";
     dimOrder.forEach((d,i) => {
@@ -490,12 +491,10 @@ function showResult(type) {
                 你的T神人格
             </div>
 
-            <!-- ★ 结果主图 -->
-            <div class="anim-clip d1 mb-8 flex justify-center">
-                <img src="./images/${key}-main.png" alt="${r.name}" class="result-img-main" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-                <div class="w-44 h-44 md:w-52 md:h-52 rounded-2xl border-2 border-dashed border-neutral-700 bg-neutral-900/50 items-center justify-center gap-2 flex-col" style="display:none;animation:float 4s ease-in-out infinite">
-                    <span class="iconify text-neutral-600" data-icon="solar:gallery-add-linear" data-width="28"></span>
-                    <span class="text-[10px] text-neutral-600 text-center px-4">放置 ${key}-main.png</span>
+            <div class="anim-img d1 inline-block mb-8" style="--rc:${c}">
+                <img src="${imgPath}" alt="${r.name}" class="result-img w-44 h-44 md:w-52 md:h-52 rounded-2xl object-cover" style="animation:float 4s ease-in-out infinite" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'" />
+                <div class="hidden w-44 h-44 md:w-52 md:h-52 rounded-2xl items-center justify-center" style="border:2px dashed #404040;background:#0a0a0a;animation:float 4s ease-in-out infinite">
+                    <span class="text-[10px] text-neutral-600">${imgPath}</span>
                 </div>
             </div>
 
@@ -510,16 +509,6 @@ function showResult(type) {
             </p>
         </div>
 
-        <!-- ★ 场景横幅图 -->
-        <div class="anim-fade d7 mb-10">
-            <img src="./images/${key}-banner.png" alt="${r.name}场景" class="result-img-banner" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
-            <div class="w-full h-36 md:h-44 rounded-xl border-2 border-dashed border-neutral-700 bg-neutral-900/50 items-center justify-center gap-2 flex-col" style="display:none">
-                <span class="iconify text-neutral-600" data-icon="solar:gallery-wide-linear" data-width="28"></span>
-                <span class="text-[10px] text-neutral-600">放置 ${key}-banner.png</span>
-            </div>
-        </div>
-
-        <!-- Description -->
         <div class="anim-fade d7 rounded-xl p-6 md:p-8 mb-8" style="background:#0a0a0a;border:1px solid #262626">
             <h3 class="text-xs tracking-widest uppercase text-neutral-500 mb-4 flex items-center gap-2">
                 <span class="iconify" data-icon="solar:document-text-linear" data-width="14"></span>
@@ -528,7 +517,6 @@ function showResult(type) {
             <div class="text-sm text-neutral-300 leading-[1.8]">${r.description}</div>
         </div>
 
-        <!-- Dimension Bars -->
         <div class="anim-fade d10 rounded-xl p-6 md:p-8 mb-10" style="background:#0a0a0a;border:1px solid #262626">
             <h3 class="text-xs tracking-widest uppercase text-neutral-500 mb-6 flex items-center gap-2">
                 <span class="iconify" data-icon="solar:chart-2-linear" data-width="14"></span>
@@ -537,12 +525,11 @@ function showResult(type) {
             <div class="space-y-3">${dimHTML}</div>
         </div>
 
-        <!-- Actions -->
         <div class="anim-fade d10 flex flex-col sm:flex-row items-center justify-center gap-4">
             <button onclick="restart()" class="px-8 py-4 bg-white text-black text-xs font-medium tracking-widest uppercase rounded-sm hover:bg-rose-500 hover:text-white transition-all duration-300">
                 重新测试
             </button>
-            <button onclick="copyResult('${type}','${r.name}')" id="copy-btn" class="px-8 py-4 text-xs font-medium tracking-widest uppercase rounded-sm border border-neutral-800 text-neutral-400 hover:border-neutral-600 hover:text-white transition-all duration-300">
+            <button onclick="copyResult('${type}','${r.name}')" class="px-8 py-4 text-xs font-medium tracking-widest uppercase rounded-sm border border-neutral-800 text-neutral-400 hover:border-neutral-600 hover:text-white transition-all duration-300">
                 复制结果
             </button>
         </div>
@@ -554,12 +541,10 @@ function showResult(type) {
     switchScreen("result-screen");
 }
 
-function restart() {
-    switchScreen("welcome");
-}
+function restart() { switchScreen("welcome"); }
 
 function copyResult(type, name) {
-    const text = `我的TSTI人格是 ${type}（${name}）！快来测测你的T神人格吧~`;
+    const text = "我的TSTI人格是 " + type + "（" + name + "）！快来测测你的T神人格吧~";
     navigator.clipboard.writeText(text).then(() => {
         showToast("已复制到剪贴板 ✓");
     }).catch(() => {
