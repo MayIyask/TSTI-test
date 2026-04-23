@@ -3,1102 +3,578 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TSTI · T神人格测试</title>
+    <title>TSTI 人格测试 | 测测你的T神人格</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg: #f7f5f2;
-            --card-bg: #ffffff;
-            --text: #2c2416;
-            --text-secondary: #6b5e4a;
-            --accent: #c8a45c;
-            --accent-dark: #a0783c;
-            --progress-bg: #e8e0d5;
-            --btn-hover: #f0e8d8;
-            --shadow: 0 2px 16px rgba(0, 0, 0, 0.07);
-            --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.10);
-            --radius: 16px;
-            --radius-sm: 10px;
-            --transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --font-heading: 'Georgia', 'Noto Serif SC', 'STSong', 'SimSun', 'Songti SC', serif;
-            --font-body: 'Georgia', 'Noto Serif SC', 'STKaiti', 'KaiTi', 'Kaiti SC', serif;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: var(--font-body);
-            background-color: var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            background-image: radial-gradient(ellipse at 50% 30%, rgba(200, 164, 92, 0.06) 0%, transparent 60%),
-                radial-gradient(ellipse at 80% 70%, rgba(180, 140, 80, 0.04) 0%, transparent 50%);
-        }
-
-        .container {
-            width: 100%;
-            max-width: 620px;
-            position: relative;
-        }
-
-        /* ========== 卡片容器 ========== */
-        .card {
-            background: var(--card-bg);
-            border-radius: var(--radius);
-            box-shadow: var(--shadow-lg);
-            padding: 40px 36px 36px;
-            transition: var(--transition);
-            position: relative;
-            overflow: hidden;
-        }
-        .card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 4px;
-            background: linear-gradient(90deg, #c8a45c, #d4b978, #c8a45c);
-            border-radius: 4px 4px 0 0;
-        }
-
-        /* ========== 封面页 ========== */
-        .cover {
-            text-align: center;
-        }
-        .cover .logo-icon {
-            font-size: 56px;
-            margin-bottom: 8px;
-            display: block;
-            animation: float 3s ease-in-out infinite;
-        }
-        @keyframes float {
-            0%,
-            100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
-        }
-        .cover h1 {
-            font-family: var(--font-heading);
-            font-size: 2.4em;
-            letter-spacing: 0.04em;
-            color: #3d2e14;
-            margin-bottom: 6px;
-            font-weight: 700;
-        }
-        .cover .subtitle {
-            font-size: 1.05em;
-            color: var(--text-secondary);
-            margin-bottom: 10px;
-            letter-spacing: 0.03em;
-        }
-        .cover .tagline {
-            font-size: 0.9em;
-            color: #a09078;
-            margin-bottom: 28px;
-            line-height: 1.6;
-        }
-        .cover .tagline span {
-            display: inline-block;
-            background: #fdf6e8;
-            padding: 3px 10px;
-            border-radius: 20px;
-            margin: 2px 3px;
-            font-size: 0.85em;
-            color: #8b6f3f;
-        }
-        .btn-start {
-            display: inline-block;
-            padding: 14px 48px;
-            font-size: 1.1em;
-            font-family: var(--font-heading);
-            letter-spacing: 0.05em;
-            background: var(--accent);
-            color: #fff;
-            border: none;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: var(--transition);
-            box-shadow: 0 4px 14px rgba(168, 124, 56, 0.3);
-            text-decoration: none;
-            font-weight: 600;
-        }
-        .btn-start:hover {
-            background: var(--accent-dark);
-            box-shadow: 0 6px 20px rgba(168, 124, 56, 0.4);
-            transform: translateY(-2px);
-        }
-        .btn-start:active {
-            transform: translateY(0);
-            box-shadow: 0 3px 10px rgba(168, 124, 56, 0.3);
-        }
-
-        /* ========== 问题页 ========== */
-        .progress-wrap {
-            margin-bottom: 24px;
-        }
-        .progress-info {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.85em;
-            color: var(--text-secondary);
-            margin-bottom: 8px;
-            letter-spacing: 0.02em;
-        }
-        .progress-bar {
-            width: 100%;
-            height: 6px;
-            background: var(--progress-bg);
-            border-radius: 3px;
-            overflow: hidden;
-        }
-        .progress-fill {
-            height: 100%;
-            background: linear-gradient(90deg, #c8a45c, #d4b978);
-            border-radius: 3px;
-            transition: width 0.45s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .question-number {
-            font-weight: 700;
-            color: var(--accent-dark);
-        }
-        .question-text {
-            font-family: var(--font-heading);
-            font-size: 1.25em;
-            font-weight: 600;
-            line-height: 1.6;
-            margin-bottom: 22px;
-            color: #3d2e14;
-            letter-spacing: 0.02em;
-        }
-        .options-list {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-        .option-btn {
-            display: block;
-            width: 100%;
-            text-align: left;
-            padding: 14px 18px;
-            font-size: 0.98em;
-            font-family: var(--font-body);
-            letter-spacing: 0.02em;
-            background: #fdfaf5;
-            border: 1.5px solid #e8e0d2;
-            border-radius: var(--radius-sm);
-            cursor: pointer;
-            transition: var(--transition);
-            color: var(--text);
-            line-height: 1.5;
-            position: relative;
-        }
-        .option-btn:hover {
-            background: #faf4e6;
-            border-color: #d4c4a0;
-            transform: translateX(3px);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-        }
-        .option-btn:active {
-            background: #f5ecda;
-            transform: translateX(1px);
-            transition: 0.1s;
-        }
-        .option-btn .opt-letter {
-            display: inline-block;
-            width: 26px;
-            height: 26px;
-            line-height: 26px;
-            text-align: center;
-            border-radius: 50%;
-            background: #f0e8d6;
-            color: #8b6f3f;
-            font-weight: 700;
-            margin-right: 10px;
-            font-size: 0.85em;
-            flex-shrink: 0;
-        }
-        .fade-in {
-            animation: fadeInUp 0.4s ease-out;
-        }
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(16px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        /* ========== 结果页 ========== */
-        .result-header {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        .result-type-badge {
-            display: inline-block;
-            font-family: var(--font-heading);
-            font-size: 2em;
-            font-weight: 700;
-            letter-spacing: 0.06em;
-            color: #3d2e14;
-            padding: 8px 22px;
-            border-radius: 30px;
-            background: #fdf6e8;
-            border: 2px solid #d4c4a0;
-            margin-bottom: 4px;
-        }
-        .result-type-name {
-            font-size: 1.3em;
-            color: var(--accent-dark);
-            font-weight: 600;
-            letter-spacing: 0.04em;
-            margin-top: 2px;
-        }
-        .result-image-wrap {
-            text-align: center;
-            margin: 16px 0 20px;
-        }
-        .result-image-wrap img {
-            width: 160px;
-            height: 160px;
-            object-fit: cover;
-            border-radius: 50%;
-            border: 4px solid #e8e0d2;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            background: #fdfaf5;
-        }
-        .result-image-wrap img.fallback-img {
-            object-fit: contain;
-            background: linear-gradient(135deg, #fdf6e8, #f5ecda);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 60px;
-        }
-        .result-desc {
-            font-size: 1.02em;
-            line-height: 1.8;
-            color: #4a3d28;
-            text-align: justify;
-            margin-bottom: 20px;
-            letter-spacing: 0.02em;
-            padding: 0 4px;
-        }
-        .result-desc strong {
-            color: #3d2e14;
-        }
-        .dimension-bars {
-            margin-top: 8px;
-            margin-bottom: 10px;
-        }
-        .dimension-bars h3 {
-            font-family: var(--font-heading);
-            font-size: 1em;
-            color: #3d2e14;
-            margin-bottom: 12px;
-            text-align: center;
-            letter-spacing: 0.04em;
-        }
-        .dim-row {
-            display: flex;
-            align-items: center;
-            margin-bottom: 8px;
-            gap: 10px;
-        }
-        .dim-label {
-            width: 70px;
-            font-size: 0.85em;
-            color: var(--text-secondary);
-            text-align: right;
-            flex-shrink: 0;
-            letter-spacing: 0.02em;
-        }
-        .dim-bar-bg {
-            flex: 1;
-            height: 18px;
-            background: #f0ebe0;
-            border-radius: 9px;
-            overflow: hidden;
-        }
-        .dim-bar-fill {
-            height: 100%;
-            border-radius: 9px;
-            transition: width 0.8s cubic-bezier(0.25, 0.8, 0.25, 1.2);
-            min-width: 4px;
-        }
-        .dim-bar-fill.cute {
-            background: linear-gradient(90deg, #f7a8b8, #f08a9c);
-        }
-        .dim-bar-fill.stupid {
-            background: linear-gradient(90deg, #c9b99a, #b8a580);
-        }
-        .dim-bar-fill.betray {
-            background: linear-gradient(90deg, #e08a70, #c97050);
-        }
-        .dim-bar-fill.lowEQ {
-            background: linear-gradient(90deg, #a0b8d0, #7a95b0);
-        }
-        .dim-bar-fill.illogic {
-            background: linear-gradient(90deg, #b0c89a, #8da870);
-        }
-        .dim-bar-fill.charm {
-            background: linear-gradient(90deg, #d4a8c8, #c080b0);
-        }
-        .dim-score {
-            width: 32px;
-            font-size: 0.8em;
-            color: #6b5e4a;
-            font-weight: 700;
-            text-align: center;
-            flex-shrink: 0;
-        }
-        .btn-restart {
-            display: block;
-            margin: 24px auto 0;
-            padding: 12px 36px;
-            font-size: 1em;
-            font-family: var(--font-heading);
-            letter-spacing: 0.04em;
-            background: transparent;
-            color: var(--accent-dark);
-            border: 2px solid #d4c4a0;
-            border-radius: 30px;
-            cursor: pointer;
-            transition: var(--transition);
-            font-weight: 600;
-        }
-        .btn-restart:hover {
-            background: #fdf6e8;
-            border-color: #c8a45c;
-        }
-        .closeness-note {
-            text-align: center;
-            font-size: 0.82em;
-            color: #a09078;
-            margin-top: 8px;
-            font-style: italic;
-            letter-spacing: 0.02em;
-        }
-
-        /* ========== 隐藏/显示 ========== */
-        .hidden {
-            display: none !important;
-        }
-
-        /* ========== 响应式 ========== */
-        @media (max-width: 500px) {
-            .card {
-                padding: 28px 18px 24px;
-                border-radius: var(--radius-sm);
-            }
-            .cover h1 {
-                font-size: 1.8em;
-            }
-            .cover .logo-icon {
-                font-size: 42px;
-            }
-            .question-text {
-                font-size: 1.08em;
-            }
-            .option-btn {
-                padding: 12px 14px;
-                font-size: 0.9em;
-            }
-            .result-type-badge {
-                font-size: 1.5em;
-            }
-            .result-image-wrap img {
-                width: 120px;
-                height: 120px;
-            }
-            .dim-label {
-                width: 55px;
-                font-size: 0.75em;
-            }
-        }
+        *{font-family:'Inter',sans-serif;margin:0;padding:0;box-sizing:border-box}
+        body{background:#050505}
+        @keyframes clipInUp{0%{clip-path:polygon(0 100%,100% 100%,100% 100%,0 100%);transform:translateY(10%)}100%{clip-path:polygon(0 0,100% 0,100% 100%,0 100%);transform:translateY(0)}}
+        @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+        @keyframes barFill{from{width:0}}
+        @keyframes bounce{0%,100%{transform:translateY(-25%);animation-timing-function:cubic-bezier(.8,0,1,1)}50%{transform:none;animation-timing-function:cubic-bezier(0,0,.2,1)}}
+        @keyframes pulseGlow{0%,100%{opacity:.3}50%{opacity:.6}}
+        @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+        .anim-clip{animation:clipInUp 1.2s cubic-bezier(.16,1,.3,1) both}
+        .anim-fade{animation:fadeIn .6s ease both}
+        .anim-bar{animation:barFill 1s cubic-bezier(.16,1,.3,1) both}
+        .d1{animation-delay:.1s}.d2{animation-delay:.2s}.d3{animation-delay:.3s}.d4{animation-delay:.4s}.d5{animation-delay:.5s}.d7{animation-delay:.7s}.d10{animation-delay:1s}
+        .loading-dot{animation:bounce 1s infinite}
+        .loading-dot:nth-child(2){animation-delay:.15s}
+        .loading-dot:nth-child(3){animation-delay:.3s}
+        .option-btn{transition:all .3s ease;border:1px solid #262626;cursor:pointer;outline:none;background:rgba(23,23,23,.5)}
+        .option-btn:hover{border-color:#f43f5e;background:rgba(244,63,94,.05);transform:translateX(4px)}
+        .option-btn:active{transform:translateX(4px) scale(.98)}
+        .progress-fill{background:linear-gradient(90deg,#f43f5e,#e11d48);transition:width .5s cubic-bezier(.16,1,.3,1)}
+        .img-placeholder{border:2px dashed #404040;background:#0a0a0a;transition:border-color .3s}
+        .img-placeholder:hover{border-color:#525252}
+        .grid-bg{background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);background-size:50px 50px;opacity:.03}
+        .bar-cute{background:linear-gradient(90deg,#fb923c,#f97316)}
+        .bar-stupid{background:linear-gradient(90deg,#facc15,#eab308)}
+        .bar-betray{background:linear-gradient(90deg,#f87171,#ef4444)}
+        .bar-lowEQ{background:linear-gradient(90deg,#a78bfa,#8b5cf6)}
+        .bar-illogical{background:linear-gradient(90deg,#4ade80,#22c55e)}
+        .bar-charm{background:linear-gradient(90deg,#f472b6,#ec4899)}
+        .bar-annoying{background:linear-gradient(90deg,#78716c,#57534e)}
+        ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:#333;border-radius:2px}
+        .q-area{transition:opacity .3s ease,transform .3s cubic-bezier(.16,1,.3,1)}
+        .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);padding:.75rem 1.5rem;background:#262626;color:#e5e5e5;font-size:.75rem;border-radius:.5rem;z-index:999;animation:fadeIn .3s ease}
     </style>
 </head>
-<body>
-    <div class="container" id="appContainer">
-        <!-- 封面卡片 -->
-        <div class="card" id="coverCard">
-            <div class="cover">
-                <span class="logo-icon">🔮</span>
-                <h1>TSTI</h1>
-                <p class="subtitle">T神人格测试</p>
-                <p class="tagline">
-                    <span>可爱值</span> <span>弱智程度</span> <span>卖队友程度</span>
-                    <span>低情商</span> <span>无逻辑</span> <span>魅力值</span>
-                </p>
-                <p style="color:#8b7a5e;font-size:0.88em;margin-bottom:18px;letter-spacing:0.02em;">
-                    六个维度 · 八种T神类型 · 纯属娱乐但逻辑自洽
-                </p>
-                <button class="btn-start" onclick="startTest()">⚡ 开始测试</button>
-                <p style="margin-top:14px;font-size:0.75em;color:#b8a88c;">约20题 · 耗时3分钟 · 请凭第一直觉作答</p>
-            </div>
-        </div>
+<body class="min-h-screen text-white overflow-x-hidden">
+    <div class="fixed inset-0 grid-bg pointer-events-none"></div>
+    <div class="fixed top-[-20%] left-[20%] w-[500px] h-[500px] bg-rose-500/10 rounded-full blur-[120px] pointer-events-none" style="animation:pulseGlow 6s ease infinite"></div>
+    <div class="fixed bottom-[-20%] right-[10%] w-[400px] h-[400px] bg-rose-600/5 rounded-full blur-[100px] pointer-events-none" style="animation:pulseGlow 8s ease infinite 2s"></div>
 
-        <!-- 问题卡片 -->
-        <div class="card hidden" id="questionCard">
-            <div class="progress-wrap">
-                <div class="progress-info">
-                    <span class="question-number" id="qNumLabel">第 1 / 20 题</span>
-                    <span id="qProgressPercent">5%</span>
-                </div>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill" style="width:5%;"></div>
-                </div>
+    <!-- ============ WELCOME ============ -->
+    <div id="welcome" class="relative min-h-screen flex items-center justify-center px-6">
+        <div class="max-w-lg w-full text-center">
+            <div class="anim-clip inline-flex items-center gap-2 px-4 py-2 rounded-full border border-neutral-800 bg-neutral-900/50 text-[10px] tracking-widest uppercase text-neutral-400 mb-8">
+                <span class="w-2 h-2 rounded-full bg-rose-500"></span>
+                Personality Test
             </div>
-            <p class="question-text fade-in" id="questionText"></p>
-            <ul class="options-list fade-in" id="optionsList"></ul>
-        </div>
-
-        <!-- 结果卡片 -->
-        <div class="card hidden" id="resultCard">
-            <div class="result-header">
-                <div class="result-type-badge" id="resultBadge"></div>
-                <div class="result-type-name" id="resultName"></div>
+            <h1 class="anim-clip d1 text-6xl md:text-8xl font-semibold tracking-tighter leading-[.85] mb-5">TSTI</h1>
+            <p class="anim-clip d2 text-xl md:text-2xl font-light text-neutral-400 tracking-tight mb-3">测测你的T神人格</p>
+            <p class="anim-clip d3 text-sm text-neutral-500 leading-relaxed max-w-md mx-auto mb-10">
+                基于<strong class="text-neutral-300">7大核心维度</strong>，通过<strong class="text-neutral-300">20道精选题目</strong>，精准分析你内心深处的T神本质，匹配你的专属T神人格
+            </p>
+            <div class="anim-clip d4 flex justify-center gap-8 mb-12 text-xs text-neutral-500">
+                <div class="flex items-center gap-2"><span class="iconify" data-icon="solar:graph-up-linear" data-width="16"></span>7维分析</div>
+                <div class="flex items-center gap-2"><span class="iconify" data-icon="solar:clipboard-list-linear" data-width="16"></span>20题</div>
+                <div class="flex items-center gap-2"><span class="iconify" data-icon="solar:star-linear" data-width="16"></span>8种人格</div>
             </div>
-            <div class="result-image-wrap">
-                <img id="resultImage" src="" alt="TSTI类型图示" onerror="handleImageFallback(this);" />
-            </div>
-            <div class="result-desc" id="resultDesc"></div>
-            <div class="dimension-bars" id="dimensionBars"></div>
-            <p class="closeness-note" id="closenessNote"></p>
-            <button class="btn-restart" onclick="restartTest()">🔄 重新测试</button>
+            <button onclick="startTest()" class="anim-clip d5 group relative px-8 py-4 bg-white text-black text-xs font-medium tracking-widest uppercase rounded-sm hover:bg-rose-500 hover:text-white transition-all duration-300">
+                开始测试<span class="iconify inline-block ml-2 group-hover:translate-x-1 transition-transform" data-icon="solar:arrow-right-linear" data-width="14"></span>
+            </button>
+            <p class="anim-fade d7 mt-8 text-[10px] text-neutral-600">* 本测试纯属娱乐，结果不代表任何真实评价</p>
         </div>
     </div>
 
-    <script>
-        (function() {
-            // ==================== 维度定义 ====================
-            const DIM_KEYS = ['cute', 'stupidity', 'betrayal', 'lowEQ', 'illogical', 'charm'];
-            const DIM_LABELS = {
-                cute: '可爱值',
-                stupidity: '弱智程度',
-                betrayal: '卖队友程度',
-                lowEQ: '低情商',
-                illogical: '无逻辑',
-                charm: '魅力值'
-            };
-            const DIM_COLORS = {
-                cute: 'cute',
-                stupidity: 'stupid',
-                betrayal: 'betray',
-                lowEQ: 'lowEQ',
-                illogical: 'illogic',
-                charm: 'charm'
-            };
+    <!-- ============ QUESTION ============ -->
+    <div id="question-screen" class="relative min-h-screen flex flex-col px-6 py-8 hidden">
+        <div class="max-w-2xl w-full mx-auto mb-10">
+            <div class="flex justify-between items-center mb-3">
+                <span class="text-xs text-neutral-500 tracking-widest uppercase">题目 <span id="q-num" class="text-neutral-300">1</span> / 20</span>
+                <span id="q-pct" class="text-xs text-neutral-500 font-mono">5%</span>
+            </div>
+            <div class="w-full h-1 bg-neutral-800 rounded-full overflow-hidden">
+                <div id="progress-bar" class="progress-fill h-full rounded-full" style="width:5%"></div>
+            </div>
+        </div>
+        <div class="flex-1 flex items-center justify-center">
+            <div id="q-area" class="q-area max-w-2xl w-full">
+                <h2 id="q-text" class="text-xl md:text-2xl font-medium tracking-tight mb-8 leading-tight"></h2>
+                <div id="q-options" class="space-y-3"></div>
+            </div>
+        </div>
+        <div class="max-w-2xl w-full mx-auto text-center mt-6">
+            <p class="text-[10px] text-neutral-600">选择最符合你第一直觉的选项，不可回头</p>
+        </div>
+    </div>
 
-            // ==================== TSTI类型定义 ====================
-            const TSTI_TYPES = {
-                NAIT: {
-                    id: 'NAIT',
-                    badge: 'NAIT',
-                    name: '奶龙T神',
-                    tagline: '纯粹的呆傻可爱，虽然智商低但是讨人喜欢',
-                    vector: { cute: 9, stupidity: 7, betrayal: 2, lowEQ: 3, illogical: 5, charm: 7 },
-                    color: '#f7a8b8',
-                    emoji: '🐉',
-                    imageFile: 'nait.png',
-                    desc: `<strong>NAIT·奶龙T神</strong>，是TSTI体系中最温暖的存在。你拥有一种浑然天成的可爱气质，像一只毛茸茸的幼龙，即使做出令人啼笑皆非的蠢事，周围的人也会忍不住原谅你——甚至觉得你更可爱了。<br><br>
-                    你的智商嘛……嗯，这么说吧，你能把微波炉说明书读三遍然后依然按错按钮。但这完全不影响你成为团队里的团宠。卖队友？你根本不知道"队友"这个概念是什么意思，你只是在快乐地存在着。<br><br>
-                    <strong>适合角色：</strong>气氛组担当、吉祥物、被全员保护的对象。<br>
-                    <strong>生存法则：</strong>保持微笑，自然会有人帮你收拾残局。`
-                },
-                TANGT: {
-                    id: 'TANGT',
-                    badge: 'TANGT',
-                    name: '糖氏T神',
-                    tagline: '讨人厌、智商低，有种史诗级的蠢',
-                    vector: { cute: 2, stupidity: 9, betrayal: 5, lowEQ: 8, illogical: 8, charm: 2 },
-                    color: '#b8a580',
-                    emoji: '🍬',
-                    imageFile: 'tangt.png',
-                    desc: `<strong>TANGT·糖氏T神</strong>，一个让队友血压飙升的存在。你并非故意惹人厌——你只是天生具备一种把一切搞砸的天赋。你的愚蠢不是普通的愚蠢，是史诗级的、可以载入史册的那种。<br><br>
-                    你会在关键时刻说出最不合时宜的话，在需要配合时做出最匪夷所思的操作。卖队友对你来说就像呼吸一样自然，而且你卖完之后还会一脸无辜地问"怎么了"。<br><br>
-                    <strong>适合角色：</strong>反面教材、团队崩溃的催化剂。<br>
-                    <strong>生存法则：</strong>找个NAIT做朋友，或许能稀释一点你的杀伤力。`
-                },
-                CT: {
-                    id: 'CT',
-                    badge: 'CT',
-                    name: '杯子T神',
-                    tagline: '纯粹的惹人喜欢，干干净净的魅力',
-                    vector: { cute: 9, stupidity: 2, betrayal: 1, lowEQ: 2, illogical: 2, charm: 8 },
-                    color: '#88c8e8',
-                    emoji: '🍵',
-                    imageFile: 'ct.png',
-                    desc: `<strong>CT·杯子T神</strong>，如同一个精致又实用的杯子，人人都想捧在手心。你不仅可爱，而且不蠢——这简直是TSTI世界里的稀缺品质。你逻辑清晰、情商在线，从不卖队友，是完美的搭档人选。<br><br>
-                    你的魅力不张扬，却润物无声。和你相处越久，就越觉得你珍贵。你不会成为人群中最耀眼的那个，但一定是大家最想留在身边的那一个。<br><br>
-                    <strong>适合角色：</strong>完美副手、知心伙伴、团队的粘合剂。<br>
-                    <strong>生存法则：</strong>保持你的纯粹，世界会善待你。`
-                },
-                SHIT: {
-                    id: 'SHIT',
-                    badge: 'SHIT',
-                    name: '答辩T神',
-                    tagline: '千年一遇的没有用，视队友为无物',
-                    vector: { cute: 1, stupidity: 5, betrayal: 9, lowEQ: 6, illogical: 5, charm: 1 },
-                    color: '#c9a060',
-                    emoji: '💩',
-                    imageFile: 'shit.png',
-                    desc: `<strong>SHIT·答辩T神</strong>，TSTI体系中让所有其他类型闻风丧胆的存在。你的卖队友指数突破了天际——不是因为你坏，而是因为你根本意识不到"队友"这个概念的存在。<br><br>
-                    在你眼中，整个世界都是单机游戏，其他人只是NPC。你会毫不犹豫地在团战前挂机去拿外卖，在关键时刻把队友的位置暴露给对手，然后真诚地反问："啊？我以为那是友军。"<br><br>
-                    <strong>适合角色：</strong>独狼、野队杀手、队友血压训练器。<br>
-                    <strong>生存法则：</strong>建议单排，利人利己。`
-                },
-                CHUNT: {
-                    id: 'CHUNT',
-                    badge: 'CHUNT',
-                    name: '春虫T神',
-                    tagline: '说话毫无逻辑，思维如春日虫鸣般跳跃',
-                    vector: { cute: 4, stupidity: 5, betrayal: 3, lowEQ: 5, illogical: 9, charm: 4 },
-                    color: '#a0c888',
-                    emoji: '🐛',
-                    imageFile: 'chunt.png',
-                    desc: `<strong>CHUNT·春虫T神</strong>，你的思维轨迹就像春天草丛里的虫子——左蹦右跳，毫无规律可言。你说话的逻辑链条大约只有两节，而且这两节之间还经常断开。<br><br>
-                    你可能会在讨论晚饭吃什么时突然提到黑洞蒸发理论，然后在别人追问时理直气壮地说："因为紫菜包饭也是圆的啊。"这种令人窒息但又莫名有点道理的跳跃，正是你的标志。<br><br>
-                    <strong>适合角色：</strong>话题终结者、创意发散器、逻辑黑洞。<br>
-                    <strong>生存法则：</strong>找个有耐心的人当翻译，或者直接放弃解释。`
-                },
-                COOLT: {
-                    id: 'COOLT',
-                    badge: 'COOLT',
-                    name: '帅哥T神',
-                    tagline: '魅力值拉满，但这不影响他极低的智商',
-                    vector: { cute: 5, stupidity: 8, betrayal: 2, lowEQ: 4, illogical: 4, charm: 9 },
-                    color: '#b898d0',
-                    emoji: '😎',
-                    imageFile: 'coolt.png',
-                    desc: `<strong>COOLT·帅哥T神</strong>，行走的荷尔蒙发射器，颜值即正义的最佳代言人。你拥有让人无法忽视的魅力——可惜大脑并没有跟上颜值的发展速度。<br><br>
-                    你可能会用帅气的姿势推门而入，然后发现那是女厕所。你会自信满满地发表一番高论，说完才发现全是错的，但没关系——因为你太帅了，没人会在意。你的魅力是一张万能通行证，即使你蠢得令人发指，大家依然爱你。<br><br>
-                    <strong>适合角色：</strong>门面担当、颜值输出、笨蛋美人。<br>
-                    <strong>生存法则：</strong>多微笑少说话，你的脸就是最好的武器。`
-                },
-                SEXT: {
-                    id: 'SEXT',
-                    badge: 'SEXT',
-                    name: '魅魔T神',
-                    tagline: '没有人能阻挡他的魅力，跨越次元的吸引力',
-                    vector: { cute: 8, stupidity: 2, betrayal: 1, lowEQ: 2, illogical: 3, charm: 10 },
-                    color: '#e07080',
-                    emoji: '💋',
-                    imageFile: 'sext.png',
-                    desc: `<strong>SEXT·魅魔T神</strong>，TSTI体系中的魅力天花板。你不仅可爱、不蠢、不卖队友，还拥有超越次元的吸引力。你的存在本身就是一种降维打击——无论走到哪里，目光都会自动聚集在你身上。<br><br>
-                    你不需要刻意展示什么，一个眼神就足以让人沦陷。难得的是，你聪明且情商在线，从不滥用这份魅力。你是完美的代名词，是TSTI世界中最接近TGOD的存在——只差那么一点点全能。<br><br>
-                    <strong>适合角色：</strong>团队核心、魅力输出、万人迷。<br>
-                    <strong>生存法则：</strong>你不需要法则，法则围着你转。`
-                },
-                TGOD: {
-                    id: 'TGOD',
-                    badge: 'TGOD',
-                    name: '真神T神',
-                    tagline: '千年一遇的全能王者，TSTI的终极形态',
-                    vector: { cute: 7, stupidity: 1, betrayal: 1, lowEQ: 1, illogical: 1, charm: 9 },
-                    color: '#e8c860',
-                    emoji: '👑',
-                    imageFile: 'tgod.png',
-                    desc: `<strong>TGOD·真神T神</strong>，TSTI体系中的至高存在。千年一遇，全能之王。你可爱但不愚蠢，魅力四射但不滥用，逻辑清晰情商极高，从不卖队友——事实上队友卖你你都能carry回来。<br><br>
-                    你是所有人仰望的目标，是NAIT想成为的样子，是SEXT差一步就能触及的境界。TGOD的出现本身就是一种奇迹，如果你测出了这个结果——恭喜你，你已经超越了TSTI的普通框架。<br><br>
-                    <strong>适合角色：</strong>全能ACE、团队灵魂、传说中的T神。<br>
-                    <strong>生存法则：</strong>你已经通关了，去享受人生吧。`
-                }
-            };
+    <!-- ============ LOADING ============ -->
+    <div id="loading-screen" class="relative min-h-screen flex items-center justify-center px-6 hidden">
+        <div class="text-center">
+            <div id="loading-text" class="text-lg font-light text-neutral-300 tracking-tight mb-8 min-h-[2rem]"></div>
+            <div class="flex justify-center gap-2">
+                <div class="loading-dot w-2 h-2 rounded-full bg-rose-500"></div>
+                <div class="loading-dot w-2 h-2 rounded-full bg-rose-500"></div>
+                <div class="loading-dot w-2 h-2 rounded-full bg-rose-500"></div>
+            </div>
+        </div>
+    </div>
 
-            // ==================== 问题库 ====================
-            // 每题4个选项，每个选项给2-3个维度各+1分
-            const questions = [{
-                id: 1,
-                text: '你在打团战，队友突然掉线了，你的第一反应是？',
-                options: [
-                    { text: '默默carry，等队友回来，甚至帮他清一波兵线', scores: { cute: 2,
-                            charm: 1 } },
-                    { text: '冷静地给剩下的队友报假点', scores: { betrayal: 3,
-                            lowEQ: 2 } },
-                    { text: '愤怒地冲进敌阵1v5，光荣送头后责怪队友不在', scores: { stupidity: 2,
-                            lowEQ: 2 } },
-                    { text: '完全没注意到队友掉线，继续快乐地打自己的', scores: { stupidity: 2, 
-                            illogical: 1 } }
-                ]
-            }, {
-                id: 2,
-                text: '路边有只流浪猫可怜巴巴地看着你，你会？',
-                options: [
-                    { text: '蹲下来温柔地抚摸它，然后去便利店给它买火腿肠', scores: { cute: 3 } },
-                    { text: '对它说"我是你爹"然后走开, scores: { lowEQ: 2, cute: 1 } },
-                    { text: '拍照发朋友圈配文"好可怜的猫咪"，然后走开', scores: { charm: 1, lowEQ: 1 } },
-                    { text: '试图和它讨论流浪猫安置政策的社会学意义', scores: { illogical: 3,
-                            stupidity: 1 } }
-                ]
-            }, {
-                id: 3,
-                text: '朋友在饭局上讲了一个冷笑话，全场安静，你的反应是？',
-                options: [
-                    { text: '真诚地大笑，虽然没听懂但觉得朋友需要支持', scores: { cute: 2, charm: 1 } },
-                    { text: '？', scores: { lowEQ: 3 } },
-                    { text: '接了一个更冷的笑话，让气氛更加尴尬', scores: { illogical: 2,
-                    lowEQ: 1 } },
-                    { text: '开始分析这个笑话的结构为什么不好笑，给出改进建议', scores: { illogical: 2,
-                        stupidity: 1 } }
-                ]
-            }, {
-                id: 4,
-                text: '你发现队友在偷偷吃独食（游戏里的经济资源），你会？',
-                options: [
-                    { text: '无所谓，资源给他或许能carry，我躺好就行', scores: { cute: 1, charm: 1 } },
-                    { text: '直接冲过去抢回来，然后公屏吵架', scores: { lowEQ: 2, betrayal: 1 } },
-                    { text: '千钧一发之时报出最关键的假点', scores: { betrayal: 3 } },
-                    { text: '完全没注意到，因为根本没看小地图', scores: { stupidity: 3 } }
-                ]
-            }, {
-                id: 5,
-                text: '有人说"地球是平的"，你如何回应？',
-                options: [
-                    { text: '"哇真的吗？那我站在这边会不会滑下去？"', scores: { stupidity: 3,
-                            cute: 1 } },
-                    { text: '掏出手机打开豆包，开始严肃科普', scores: { illogical: 1,
-                            lowEQ: 1 } },
-                    { text: '"你说得对，而且月亮是三角形的，我亲眼看到的"', scores: { illogical: 3 } },
-                    { text: '微笑点头，然后在心里把对方划入"不可深交"名单', scores: { charm: 1, lowEQ: 1 } }
-                ]
-            }, {
-                id: 6,
-                text: '在一个重要的合作任务中，你突然想上厕所，你会？',
-                options: [
-                    { text: '忍到任务结束，不能让队友失望', scores: { cute: 1, charm: 1 } },
-                    { text: '直接离开，觉得"反正队友会处理的"', scores: { betrayal: 2,
-                    stupidity: 1 } },
-                    { text: '在语音里大喊"我要拉屎！"然后挂着麦克风离开', scores: { lowEQ: 3,
-                            illogical: 1 } },
-                    { text: '傻逼傻逼傻逼', scores: { illogical: 2,
-                        stupidity: 1 } }
-                ]
-            }, {
-                id: 7,
-                text: '有人在社交媒体上发了一条明显是谣言的信息，你会？',
-                options: [
-                    { text: '回复一个问号', scores: { stupidity: 3 } },
-                    { text: '在评论区写下500字理性分析逐条反驳', scores: { illogical: 1, lowEQ: 1 } },
-                    { text: '截图发到群里，大家一起嘲笑', scores: { betrayal: 1, charm: 1 } },
-                    { text: '思考谣言是什么意思', scores: { stupidity: 2,
-                    illogical: 1 } }
-                ]
-            }, {
-                id: 8,
-                text: '你暗恋的人突然约你出去，你的第一反应是？',
-                options: [
-                    { text: '心跳加速，精心打扮，提前半小时到达约定地点', scores: { cute: 2, charm: 1 } },
-                    { text: '"啊？你是在跟我说话吗？"——环顾四周确认', scores: { stupidity: 2,
-                            cute: 1 } },
-                    { text: '冷静分析对方的动机，列出可能的结果概率', scores: { illogical: 1,
-                            lowEQ: 1 } },
-                    { text: '回答“我的价格可是很高的”', scores: { lowEQ: 3 } }
-                ]
-            }, {
-                id: 9,
-                text: '在团队游戏中，你拿到了一个自己不擅长的角色，你会？',
-                options: [
-                    { text: '诚实告知队友，请求换角色或指导', scores: { cute: 1, charm: 1 } },
-                    { text: '硬着头皮上，然后打出了0-15-0的战绩', scores: { stupidity: 2,
-                        betrayal: 1 } },
-                    { text: '直接说"我不会"然后秒选其他角色，不管阵容', scores: { lowEQ: 2,
-                    betrayal: 1 } },
-                    { text: '开始研究这个角色的技能描述，在选人阶段读完并制定策略', scores: { illogical: 2,
-                            stupidity: 1 } }
-                ]
-            }, {
-                id: 10,
-                text: '朋友跟你说"我好像失恋了"，你的回应是？',
-                options: [
-                    { text: '默默递上纸巾，然后带他去吃好吃的', scores: { cute: 2, charm: 1 } },
-                    { text: '"早就告诉过你那个人不靠谱，你不听我的"', scores: { lowEQ: 3 } },
-                    { text: '"失恋是什么感觉？我没有恋爱过所以不太懂"', scores: { stupidity: 2,
-                            lowEQ: 1 } },
-                    { text: '我都没有失恋的机会，我比你强', scores: { illogical: 3 } }
-                ]
-            }, {
-                id: 11,
-                text: '你在超市结账时发现钱包忘带了，你会？',
-                options: [
-                    { text: '抱歉地对收银员笑笑，把东西放回去，下次再来', scores: { cute: 2, charm: 1 } },
-                    { text: '打电话给朋友求救，语气夸张得像在拍灾难片', scores: { charm: 1,
-                    illogical: 1 } },
-                    { text: '试图用"我今天穿得很可爱"作为支付方式', scores: { stupidity: 3,
-                            charm: 1 } },
-                    { text: '向收银员表达最真诚的父爱', scores: { illogical: 3,
-                            lowEQ: 1 } }
-                ]
-            }, {
-                id: 12,
-                text: '队友在语音里指挥你，但你觉得他的指挥很烂，你会？',
-                options: [
-                    { text: '礼貌地提出自己的建议，尝试沟通', scores: { cute: 1, charm: 1 } },
-                    { text: '直接闭麦，按照自己的想法打，输了就怪他', scores: { betrayal: 2,
-                    lowEQ: 1 } },
-                    { text: '在语音里和他对骂，音量逐渐升高', scores: { lowEQ: 3 } },
-                    { text: '完全没听清他在说什么，因为你在刷短视频', scores: { stupidity: 3 } }
-                ]
-            }, {
-                id: 13,
-                text: '有人跟你说"1+1=3"，你的反应是？',
-                options: [
-                    { text: '"哇！你发现了数学的新大陆！"', scores: { cute: 2, stupidity: 1 } },
-                    { text: '"不对，1+1=11，你连这个都不知道？"', scores: { stupidity: 3,
-                            illogical: 1 } },
-                    { text: '沉默五秒，然后开始怀疑自己从小到大接受的数学教育', scores: { illogical: 2,
-                            stupidity: 1 } },
-                    { text: '认真地在纸上写证明过程，试图用皮亚诺公理反驳', scores: { illogical: 1,
-                    lowEQ: 1 } }
-                ]
-            }, {
-                id: 14,
-                text: '在多人合作游戏中，你拿到了关键道具，你会？',
-                options: [
-                    { text: '根据团队需要合理分配，优先给最需要的队友', scores: { cute: 1, charm: 2 } },
-                    { text: '自己独占，自信地认为"我carry就行"', scores: { betrayal: 1,
-                    stupidity: 1 } },
-                    { text: '随手给了离自己最近的队友，完全不看对方是否需要', scores: { stupidity: 2,
-                        betrayal: 1 } },
-                    { text: '把道具当作谈判筹码，要求队友先承认你"最强"', scores: { lowEQ: 2,
-                    betrayal: 1 } }
-                ]
-            }, {
-                id: 15,
-                text: '你在公共场合被人踩了一脚，对方没有道歉，你会？',
-                options: [
-                    { text: '觉得对方可能没注意到，默默走开', scores: { cute: 2, lowEQ: 1 } },
-                    { text: '大声说"哎哟！我的脚！"吸引全场目光', scores: { charm: 1,
-                    illogical: 1 } },
-                    { text: '追上去踩回来，然后说"现在扯平了"', scores: { lowEQ: 3,
-                    betrayal: 1 } },
-                    { text: '开始思考"道歉"作为一种社会契约的哲学基础', scores: { illogical: 3 } }
-                ]
-            }, {
-                id: 16,
-                text: '你被问到"你觉得自己的缺点是什么？"',
-                options: [
-                    { text: '真诚地列举几个，并表示正在努力改进', scores: { cute: 1, charm: 2 } },
-                    { text: '"我最大的缺点就是太完美了，容易让别人自卑"', scores: { lowEQ: 2,
-                    charm: 1 } },
-                    { text: '"缺点是什么？可以吃吗？"', scores: { stupidity: 2,
-                    cute: 1 } },
-                    { text: '开始从头讲述自己的童年经历，讲了半小时还没说到正题', scores: { illogical: 3 } }
-                ]
-            }, {
-                id: 17,
-                text: '在密室逃脱中，队友被困在了一个房间里，你会？',
-                options: [
-                    { text: '努力找线索，尝试各种方法救队友出来', scores: { cute: 2, charm: 1 } },
-                    { text: '对外面喊"你等一下我去买个奶茶"然后真的去了', scores: { betrayal: 3,
-                            stupidity: 1 } },
-                    { text: '隔着门开始讲冷笑话，说"反正你在里面也没事做"', scores: { lowEQ: 2,
-                    illogical: 1 } },
-                    { text: '试图用蛮力砸开门，触发警报，全员被请出密室', scores: { stupidity: 3 } }
-                ]
-            }, {
-                id: 18,
-                text: '有人跟你说了一个你完全不了解的话题，你会？',
-                options: [
-                    { text: '坦然承认不了解，并好奇地请对方多讲讲', scores: { cute: 2, charm: 1 } },
-                    { text: '不懂装懂，频频点头，偶尔"嗯嗯"两声', scores: { stupidity: 2,
-                    lowEQ: 1 } },
-                    { text: '强行把话题拉回自己熟悉的领域，开始滔滔不绝', scores: { lowEQ: 2,
-                    illogical: 1 } },
-                    { text: '开始胡编乱造一些"事实"，说得跟真的一样', scores: { illogical: 2,
-                    stupidity: 1 } }
-                ]
-            }, {
-                id: 19,
-                text: '在团队项目中，你的部分出了差错，你会？',
-                options: [
-                    { text: '第一时间承认错误，主动提出补救方案', scores: { cute: 1, charm: 2 } },
-                    { text: '尝试把锅甩给其他队友，说"是因为他的部分先出问题"', scores: { betrayal: 3,
-                            lowEQ: 1 } },
-                    { text: '"啊？有差错吗？我觉得挺好的啊"——完全没发现', scores: { stupidity: 3 } },
-                    { text: '开始长篇大论解释为什么这个"差错"其实是一种创新', scores: { illogical: 3 } }
-                ]
-            }, {
-                id: 20,
-                text: '最后：如果用一句话总结你的人生哲学，最接近的是？',
-                options: [
-                    { text: '"世界以痛吻我，我报之以可爱"', scores: { cute: 3, charm: 1 } },
-                    { text: '"队友是用来卖的，不然留着过年吗"', scores: { betrayal: 3,
-                    lowEQ: 1 } },
-                    { text: '"逻辑是弱者的拐杖，强者靠直觉"', scores: { illogical: 3,
-                            stupidity: 1 } },
-                    { text: '"我就是太阳，你们围着我转就完事了"', scores: { charm: 3,
-                    lowEQ: 1 } }
-                ]
-            }];
+    <!-- ============ RESULT ============ -->
+    <div id="result-screen" class="relative min-h-screen flex items-start justify-center px-6 py-16 hidden">
+        <div class="max-w-2xl w-full">
+            <div id="result-content"></div>
+        </div>
+    </div>
 
-            // ==================== 状态管理 ====================
-            let currentQuestionIndex = 0;
-            let scores = { cute: 0, stupidity: 0, betrayal: 0, lowEQ: 0, illogical: 0, charm: 0 };
-            let totalQuestions = questions.length;
+<script>
+// ===================== DATA =====================
+const questions = [
+    {
+        text: "你的队友在团战中残血了，你会？",
+        options: [
+            { text: "马上去救ta结果自己先死了", s: {cute:7,betray:-7,annoying:-3} },
+            { text: "冷静地报假点", s: {annoying:8,lowEQ:5} },
+            { text: "大喊我草妈的", s: {stupid:7,illogical:7,cute:3} },
+            { text: "优雅地走位，顺手救一下", s: {charm:8,stupid:-3,cute:3} }
+        ]
+    },
+    {
+        text: "朋友问你1+1等于几，你怎么回答？",
+        options: [
+            { text: "2啊，这还用问", s: {stupid:-7,illogical:-6} },
+            { text: "等于……等于……我算算……", s: {stupid:7,cute:4} },
+            { text: "?", s: {stupid:8,illogical:8} },
+            { text: "我是你爹", s: {charm:7,stupid:-5,lowEQ:3} }
+        ]
+    },
+    {
+        text: "你发了一条消息，发现发错了群，你会？",
+        options: [
+            { text: "光速撤回，假装无事发生", s: {lowEQ:-6,annoying:-4} },
+            { text: "发个表情包掩饰尴尬", s: {cute:5,stupid:3} },
+            { text: "继续发更多错的消息，让所有人困惑", s: {illogical:7,annoying:6} },
+            { text: "sb", s: {charm:7,lowEQ:-5} }
+        ]
+    },
+    {
+        text: "在游戏里你选什么角色？",
+        options: [
+            { text: "奶妈/辅助，默默付出不求回报", s: {cute:6,betray:-7,annoying:-4} },
+            { text: "输出位，但总是第一个死", s: {stupid:7,cute:4} },
+            { text: "吸血，专门偷队友的资源", s: {betray:8,annoying:7} },
+            { text: "t神就要玩t", s: {charm:8,stupid:4} }
+        ]
+    },
+    {
+        text: "朋友失恋了来找你倾诉，你怎么做？",
+        options: [
+            { text: "安静听他讲完，默默递纸巾", s: {cute:6,lowEQ:-6,annoying:-4} },
+            { text: "「别哭了，你不是还有我嘛！」然后他哭得更厉害了", s: {lowEQ:8,annoying:7} },
+            { text: "「他不要你是他的损失……虽然我也不知道为什么」", s: {stupid:6,illogical:6,cute:3} },
+            { text: "你虽然失去了她的爱情，但是你还有我的父爱啊！", s: {charm:8,lowEQ:-5,cute:2} }
+        ]
+    },
+    {
+        text: "你走在路上突然摔了一跤，你的反应是？",
+        options: [
+            { text: "立刻爬起来拍拍灰，装作什么都没发生", s: {cute:5,annoying:-3} },
+            { text: "直接躺下不动，等有人来扶", s: {stupid:8,cute:5} },
+            { text: "地板我c你的m", s: {illogical:6,annoying:5} },
+            { text: "优雅地摔，起来还整理一下发型", s: {charm:9,stupid:-3} }
+        ]
+    },
+    {
+        text: "团队讨论方案时，你通常是什么角色？",
+        options: [
+            { text: "认真听别人说，偶尔补充细节", s: {cute:5,illogical:-4,annoying:-3} },
+            { text: "提出一个完全不着边的方案，然后得意地傻笑", s: {illogical:8,stupid:6} },
+            { text: "反对所有人的方案，但自己也不给替代方案", s: {betray:7,annoying:6,lowEQ:4} },
+            { text: "用最简洁的话总结所有人的意见，大家都很佩服", s: {charm:8,illogical:-5,stupid:-4} }
+        ]
+    },
+    {
+        text: "你怎么回应别人的夸奖？",
+        options: [
+            { text: "「没有啦，你才厉害！」", s: {cute:6,lowEQ:-5} },
+            { text: "「我知道啊，这还用你说」", s: {annoying:8,lowEQ:7} },
+            { text: "「啊？你是在夸我吗？」", s: {stupid:7,cute:4} },
+            { text: "微微一笑，说声谢谢", s: {charm:8,lowEQ:-5} }
+        ]
+    },
+    {
+        text: "你和队友打游戏连输了五把，你会？",
+        options: [
+            { text: "「没关系没关系，下一把一定赢！」", s: {cute:5,annoying:-5,betray:-5} },
+            { text: "「都是你们太菜了」", s: {betray:8,annoying:8,lowEQ:5} },
+            { text: "「我觉得我们应该换个……呃……换什么来着？」", s: {stupid:7,illogical:7} },
+            { text: "「我伤害最高！」", s: {charm:7,cute:3,stupid:-3} }
+        ]
+    },
+    {
+        text: "你在群里发了一张自拍，没人回复，你会？",
+        options: [
+            { text: "悄悄撤回，假装什么都没发生过", s: {cute:4,annoying:-3} },
+            { text: "@所有人 好看吗？？？", s: {annoying:8,lowEQ:7} },
+            { text: "把小号拉进群里夸自己", s: {illogical:7,annoying:6,stupid:3} },
+            { text: "无所谓，自然地切换话题", s: {charm:7,lowEQ:-5} }
+        ]
+    },
+    {
+        text: "你在餐厅点菜时通常是什么状态？",
+        options: [
+            { text: "让别人先点，自己随便配合", s: {cute:5,annoying:-4} },
+            { text: "点最贵的，不管别人意见", s: {betray:7,annoying:7} },
+            { text: "看菜单看了十分钟发现是桌牌", s: {stupid:8,illogical:4,cute:2} },
+            { text: "快速点完，还帮别人推荐菜品", s: {charm:7,stupid:-4,illogical:-4} }
+        ]
+    },
+    {
+        text: "朋友问你借钱，你的反应是？",
+        options: [
+            { text: "二话不说就转过去了", s: {cute:6,betray:-7,annoying:-4} },
+            { text: "「我最近也穷啊」然后发了张大额消费截图", s: {lowEQ:8,annoying:7,betray:5} },
+            { text: "「叫我爹我就借你。」", s: {stupid:7,illogical:5,cute:2} },
+            { text: "优雅地答应，还主动说不用急着还", s: {charm:8,cute:3,betray:-4} }
+        ]
+    },
+    {
+        text: "你怎么处理和别人的矛盾？",
+        options: [
+            { text: "先道歉，即使不是自己的错", s: {cute:5,annoying:-4,lowEQ:-5} },
+            { text: "绝不道歉，错也不道", s: {annoying:8,lowEQ:7,betray:4} },
+            { text: "「我觉得吧……这个事情吧……就是……那个……」", s: {illogical:8,stupid:6} },
+            { text: "理性分析问题，找到双方都能接受的方案", s: {charm:8,illogical:-5,stupid:-5,lowEQ:-4} }
+        ]
+    },
+    {
+        text: "你在考试时的状态是？",
+        options: [
+            { text: "飞速做完题然后去找老师对答案。", s: {cute:4,stupid:-5} },
+            { text: "全蒙C，性价比最高", s: {stupid:8,illogical:7} },
+            { text: "交白卷但画了一幅绝美的画", s: {illogical:7,stupid:5,cute:2} },
+            { text: "轻松做完，提前交卷", s: {charm:8,stupid:-5} }
+        ]
+    },
+    {
+        text: "别人讲了一个你完全听不懂的笑话，你会？",
+        options: [
+            { text: "跟着大家一起笑，回去偷偷百度", s: {cute:5,annoying:-4} },
+            { text: "「这有什么好笑的？」气氛瞬间凝固", s: {lowEQ:8,annoying:7} },
+            { text: "笑了半天之后问「所以笑点在哪？」", s: {stupid:7,cute:5,illogical:4} },
+            { text: "沉思两秒，然后说了一句sb", s: {charm:7,stupid:-4} }
+        ]
+    },
+    {
+        text: "你在社交媒体上的发言风格是？",
+        options: [
+            { text: "偶尔发自拍和日常，温暖治愈", s: {cute:5,annoying:-4} },
+            { text: "天天发抱怨贴，负能量拉满", s: {annoying:8,lowEQ:7} },
+            { text: "发的东西没人看得懂，像加密通话", s: {illogical:8,stupid:6} },
+            { text: "偶尔发一条，每条都很有品味", s: {charm:8,annoying:-4,illogical:-4} }
+        ]
+    },
+    {
+        text: "你在团队中的真实定位是？",
+        options: [
+            { text: "气氛担当，大家都喜欢和我玩", s: {cute:6,charm:5,annoying:-4} },
+            { text: "怎么所有人都在骂我？", s: {stupid:7,annoying:4} },
+            { text: "*开心地报假点*", s: {betray:8,annoying:8} },
+            { text: "团队是什么？玩得帅才是真的", s: {charm:9,stupid:5} }
+        ]
+    },
+    {
+        text: "你怎么应对尴尬场面？",
+        options: [
+            { text: "讲个冷笑话化解，效果看运气", s: {cute:5,lowEQ:-4} },
+            { text: "直接逃跑，三十六计走为上", s: {stupid:6,cute:5} },
+            { text: "假装没发生，开始说完全不相关的事", s: {illogical:7,annoying:5} },
+            { text: "自嘲一下，瞬间化解所有人尴尬", s: {charm:8,stupid:-4,lowEQ:-4} }
+        ]
+    },
+    {
+        text: "别人当面批评你，你会？",
+        options: [
+            { text: "虚心接受，表示感谢", s: {cute:6,lowEQ:-6,annoying:-4} },
+            { text: "立刻怼回去，绝不认怂", s: {lowEQ:8,annoying:8,betray:4} },
+            { text: "「你说得对，但是……嗯……那个……」", s: {stupid:7,illogical:6,cute:2} },
+            { text: "微笑听完，然后优雅地解释自己的思路", s: {charm:8,lowEQ:-5,illogical:-4} }
+        ]
+    },
+    {
+        text: "如果用一句话形容你自己，你会说？",
+        options: [
+            { text: "我是你爹", s: {cute:7,charm:3,annoying:-4} },
+            { text: "？", s: {annoying:8,lowEQ:7} },
+            { text: "龙，可是...", s: {stupid:8,illogical:8,cute:2} },
+            { text: "吾即是汝，汝便是吾。", s: {charm:8,stupid:-4,annoying:-4} }
+        ]
+    }
+];
 
-            // DOM元素
-            const coverCard = document.getElementById('coverCard');
-            const questionCard = document.getElementById('questionCard');
-            const resultCard = document.getElementById('resultCard');
-            const questionText = document.getElementById('questionText');
-            const optionsList = document.getElementById('optionsList');
-            const progressFill = document.getElementById('progressFill');
-            const qNumLabel = document.getElementById('qNumLabel');
-            const qProgressPercent = document.getElementById('qProgressPercent');
-            const resultBadge = document.getElementById('resultBadge');
-            const resultName = document.getElementById('resultName');
-            const resultImage = document.getElementById('resultImage');
-            const resultDesc = document.getElementById('resultDesc');
-            const dimensionBars = document.getElementById('dimensionBars');
-            const closenessNote = document.getElementById('closenessNote');
+const results = {
+    NAIT: {
+        name: "奶龙t神",
+        subtitle: "纯粹的呆傻可爱，行走的快乐源泉",
+        traits: ["呆萌", "讨喜", "低智商", "无害", "快乐源泉"],
+        description: "你是天生的呆萌担当。你的大脑运转速度可能比别人慢了几个档位，但你那种「虽然是笨蛋但好可爱」的独特气质让人根本生不起气来。你在团队中就像一只摇头晃脑的小恐龙，虽然经常犯蠢，但每次犯蠢的样子都让人忍不住截图保存，甚至设成表情包。<br><br>你的可爱值已经突破了天际，弱智程度也相当可观，但这两者结合在一起反而产生了奇妙的化学反应——别人对你的容忍度远超常人。即使你做了很蠢的事，大家的第一反应也是笑而不是骂。<br><br>建议：继续保持你的呆萌，这个世界需要更多像你这样的快乐源泉。但偶尔也试着动动脑子，别可爱过头了。"
+    },
+    TANGT: {
+        name: "糖氏t神",
+        subtitle: "史诗级的蠢，让人血压飙升的存在",
+        traits: ["史诗级蠢", "讨人厌", "低情商", "迷之自信"],
+        description: "你是那种「看到就想绕道走」的存在。你的蠢不是可爱的蠢，而是让人咬牙切齿的蠢。你说话常常精准踩在所有人的雷点上，做事永远选择最让人崩溃的方案。更可怕的是，你似乎对此毫无察觉。<br><br>你有一种不可思议的天赋——无论什么局面，你都能做出最差的选择。队友在奋力拼搏的时候，你在拖后腿；大家开心庆祝的时候，你说了一句让全场沉默的话。你不是故意要这样，但你就是这样。<br><br>建议：少说话，多看，多想。在你开口之前，在心里默念三遍「我这样说合适吗」。如果不确定，那就别说。"
+    },
+    CT: {
+        name: "杯子t神",
+        subtitle: "纯粹的惹人喜欢，团队的定海神针",
+        traits: ["治愈系", "靠谱", "高情商", "团宠", "不可或缺"],
+        description: "你是纯粹的美好本身。你的可爱不是刻意为之，而是由内而外散发出来的温柔气质。你智商在线，情商拉满，从不卖队友，说话有条有理。你是团队中的定海神针，是所有人心里那个「有他在就安心了」的人。<br><br>你可能不是最耀眼的那一个，但你绝对是最不可或缺的那一个。你像一杯温水，不会烫到人，也不会冷到人，永远在最适合的温度。和你相处是一种享受，离开你会觉得少了什么。<br><br>建议：继续保持，你是这个混沌世界里的稀缺物种。但也要记得照顾自己，别总把温柔留给别人。"
+    },
+    SHIT: {
+        name: "答辩t神",
+        subtitle: "千年一遇的没有用，队友的噩梦",
+        traits: ["内鬼", "零贡献", "拖后腿", "视队友为无物", "行走的灾难"],
+        description: "你是一坨行走的……算了，你的名字已经说明了一切。你视队友为草芥，卖队友的速度比打敌人还快。你在团队中的存在感基本为零——不对，是负数。因为你不仅不贡献，还会主动从内部瓦解团队的战斗力。<br><br>团战你第一个跑，资源你第一个抢，锅你第一个甩。如果有一天你的队友们集体消失，不要惊讶，他们只是终于做出了正确的选择——远离你。<br><br>建议：认真反思。非常认真非常认真地反思。如果反思不出来为什么，那说明问题比你想的还严重。"
+    },
+    CHUNT: {
+        name: " 傻逼t神",
+        subtitle: "说话毫无逻辑，活在自己的世界里",
+        traits: ["逻辑断裂", "脑回路清奇", "自成一派", "谜语人", "思维跳跃"],
+        description: "你的大脑运作方式至今是个未解之谜。你说出的话前后矛盾、逻辑断裂，有时候连你自己都不知道自己在说什么。但神奇的是，你似乎对此毫无察觉，还觉得自己说得挺有道理。<br><br>你活在属于自己的逻辑世界里，那个世界的规则和现实世界完全不兼容。和你聊天就像在做阅读理解，而且是没有标准答案、没有提示、连题目都可能看错的那种。你的思维跳跃程度堪比量子力学。<br><br>建议：尝试在说话之前先想三秒。就三秒。如果三秒之后你还是不知道自己要说什么，那就……再想三秒。"
+    },
+    COOLT: {
+        name: "帅哥t神",
+        subtitle: "颜值拉满，智商拉胯，帅但蠢的完美样本",
+        traits: ["颜值担当", "花瓶", "帅但蠢", "靠脸吃饭", "万人迷"],
+        description: "你长了一张让人心动的脸，但你的智商实在配不上你的颜值。你是团队中的「好看但不中用」代表，每次出场都能引起一阵惊叹，然后迅速用实际行动让所有人从惊艳变成无奈。<br><br>但神奇的是，即使你做了一件很蠢的事，大家看在你脸的份上还是选择原谅你。这就是颜值的力量，不公平但真实存在。你靠着脸在团队中获得了远超你实际能力的容忍度。<br><br>建议：好好保养你的脸，这是你最大的资产。同时建议培养一个不需要动脑的爱好，因为你一动脑就容易出事。"
+    },
+    SEXT: {
+        name: "魅魔t神",
+        subtitle: "没有人能阻挡你的魅力，没有人",
+        traits: ["万人迷", "魅力溢出", "情商在线", "致命吸引力", "让人沦陷"],
+        description: "没有人能抵挡你的魅力，真的没有人。你的一举一动都散发着让人无法抗拒的吸引力，你的情商很高，知道什么时候该说什么话，什么场合该做什么事。你在人群中就像一块强力磁铁，所有人都会不自觉地被你吸引。<br><br>如果魅力是一门武功，你就是宗师级别。你甚至不需要刻意表现，一个眼神、一句话就能让人心跳加速。你的存在本身就是一种危险品，需要贴上「可能造成心智沦陷」的警告标签。<br><br>建议：注意你的魅力辐射范围，避免误伤无辜群众。同时记得——魅力虽好，但也不要滥用。"
+    },
+    TGOD: {
+        name: "千年一遇的真神t神",
+        subtitle: "全能之王，T神人格的天花板",
+        traits: ["全能", "完美", "王者", "千年一遇", "降维打击"],
+        description: "你就是传说中千年一遇的存在。可爱？有，而且恰到好处。智商？在线，而且高于常人。情商？拉满，让人如沐春风。魅力？溢出，走到哪里都是焦点。逻辑？清晰，说话做事滴水不漏。<br><br>你是所有T神人格中最接近完美的存在，是千分之一概率才能出现的真神。你的队友以你为荣，你的对手以你为目标，你的敌人……好吧你没有敌人，因为你强大到让人只能敬佩。<br><br>建议：请收下我的膝盖。然后继续保持你的完美，给这个不完美的世界一点希望。但记住，高处不胜寒，偶尔也展现一下小缺点，不然真的太不真实了。"
+    }
+};
 
-            // ==================== 函数 ====================
-            function showCard(card) {
-                coverCard.classList.add('hidden');
-                questionCard.classList.add('hidden');
-                resultCard.classList.add('hidden');
-                card.classList.remove('hidden');
-                // 触发重排以重新触发动画
-                card.querySelectorAll('.fade-in').forEach(el => {
-                    el.style.animation = 'none';
-                    el.offsetHeight;
-                    el.style.animation = '';
-                });
-            }
+const resultMeta = {
+    NAIT:  { color: "#f97316", label: "NAIT" },
+    TANGT: { color: "#eab308", label: "TANGT" },
+    CT:    { color: "#3b82f6", label: "CT" },
+    SHIT:  { color: "#78716c", label: "SHIT" },
+    CHUNT: { color: "#22c55e", label: "CHUNT" },
+    COOLT: { color: "#06b6d4", label: "COOLT" },
+    SEXT:  { color: "#ec4899", label: "SEXT" },
+    TGOD:  { color: "#f43f5e", label: "TGOD" }
+};
 
-            function startTest() {
-                currentQuestionIndex = 0;
-                scores = { cute: 0, stupidity: 0, betrayal: 0, lowEQ: 0, illogical: 0, charm: 0 };
-                showCard(questionCard);
-                renderQuestion();
-            }
+const dimNames = { cute:"可爱值", stupid:"弱智程度", betray:"卖队友程度", lowEQ:"低情商", illogical:"无逻辑", charm:"魅力值", annoying:"讨厌度" };
+const dimBars = { cute:"bar-cute", stupid:"bar-stupid", betray:"bar-betray", lowEQ:"bar-lowEQ", illogical:"bar-illogical", charm:"bar-charm", annoying:"bar-annoying" };
+const dimOrder = ["cute","stupid","betray","lowEQ","illogical","charm","annoying"];
 
-            function restartTest() {
-                startTest();
-            }
+// ===================== STATE =====================
+let currentQ = 0;
+let scores = { cute:50, stupid:50, betray:50, lowEQ:50, illogical:50, charm:50, annoying:50 };
 
-            function renderQuestion() {
-                if (currentQuestionIndex >= totalQuestions) {
-                    showResults();
-                    return;
-                }
-                const q = questions[currentQuestionIndex];
-                questionText.textContent = q.text;
-                qNumLabel.textContent = `第 ${currentQuestionIndex + 1} / ${totalQuestions} 题`;
-                const percent = Math.round(((currentQuestionIndex + 1) / totalQuestions) * 100);
-                qProgressPercent.textContent = percent + '%';
-                progressFill.style.width = percent + '%';
+// ===================== FUNCTIONS =====================
+function switchScreen(id) {
+    ["welcome","question-screen","loading-screen","result-screen"].forEach(s => {
+        document.getElementById(s).classList.add("hidden");
+    });
+    document.getElementById(id).classList.remove("hidden");
+    window.scrollTo({top:0,behavior:"smooth"});
+}
 
-                const letters = ['A', 'B', 'C', 'D'];
-                optionsList.innerHTML = '';
-                q.options.forEach((opt, i) => {
-                    const li = document.createElement('li');
-                    const btn = document.createElement('button');
-                    btn.className = 'option-btn';
-                    btn.innerHTML = `<span class="opt-letter">${letters[i]}</span>${opt.text}`;
-                    btn.addEventListener('click', () => {
-                        selectOption(opt);
-                    });
-                    li.appendChild(btn);
-                    optionsList.appendChild(li);
-                });
+function startTest() {
+    currentQ = 0;
+    scores = { cute:50, stupid:50, betray:50, lowEQ:50, illogical:50, charm:50, annoying:50 };
+    switchScreen("question-screen");
+    renderQuestion();
+}
 
-                // 触发动画
-                questionText.classList.remove('fade-in');
-                optionsList.classList.remove('fade-in');
-                void questionText.offsetWidth;
-                questionText.classList.add('fade-in');
-                optionsList.classList.add('fade-in');
-            }
+function renderQuestion() {
+    const q = questions[currentQ];
+    const pct = Math.round((currentQ + 1) / questions.length * 100);
+    document.getElementById("q-num").textContent = currentQ + 1;
+    document.getElementById("q-pct").textContent = pct + "%";
+    document.getElementById("progress-bar").style.width = pct + "%";
+    document.getElementById("q-text").textContent = q.text;
+    const letters = ["A","B","C","D"];
+    document.getElementById("q-options").innerHTML = q.options.map((o,i) => `
+        <button onclick="selectOption(${i})" class="option-btn w-full text-left px-5 py-4 rounded-lg flex items-center gap-4 group">
+            <span class="shrink-0 w-8 h-8 rounded-md bg-neutral-800 flex items-center justify-center text-xs text-neutral-400 font-medium group-hover:bg-rose-500/10 group-hover:text-rose-400 transition-colors">${letters[i]}</span>
+            <span class="text-sm text-neutral-300 group-hover:text-white transition-colors leading-relaxed">${o.text}</span>
+        </button>
+    `).join("");
+}
 
-            function selectOption(option) {
-                // 累加分数
-                if (option.scores) {
-                    for (const [dim, val] of Object.entries(option.scores)) {
-                        if (scores.hasOwnProperty(dim)) {
-                            scores[dim] += val;
-                        }
-                    }
-                }
-                currentQuestionIndex++;
-                if (currentQuestionIndex >= totalQuestions) {
-                    showResults();
-                } else {
-                    renderQuestion();
-                    // 滚动到顶部
-                    document.getElementById('appContainer').scrollIntoView({ behavior: 'smooth' });
-                }
-            }
+function selectOption(idx) {
+    const opt = questions[currentQ].options[idx];
+    Object.entries(opt.s).forEach(([k,v]) => { scores[k] += v; });
+    currentQ++;
+    if (currentQ >= questions.length) {
+        showLoading();
+    } else {
+        const area = document.getElementById("q-area");
+        area.style.opacity = "0";
+        area.style.transform = "translateX(-20px)";
+        setTimeout(() => {
+            renderQuestion();
+            area.style.opacity = "1";
+            area.style.transform = "translateX(0)";
+        }, 280);
+    }
+}
 
-            function showResults() {
-                // 计算每个维度的最大可能得分（用于归一化）
-                const maxPossible = {};
-                DIM_KEYS.forEach(k => { maxPossible[k] = 0; });
-                questions.forEach(q => {
-                    q.options.forEach(opt => {
-                        if (opt.scores) {
-                            for (const [dim, val] of Object.entries(opt.scores)) {
-                                if (maxPossible.hasOwnProperty(dim)) {
-                                    maxPossible[dim] = Math.max(maxPossible[dim], val);
-                                }
-                            }
-                        }
-                    });
-                });
-                // 实际最大可能 = 每题该维度最大加分之和
-                const trueMax = {};
-                DIM_KEYS.forEach(k => { trueMax[k] = 0; });
-                questions.forEach(q => {
-                    let qMax = 0;
-                    q.options.forEach(opt => {
-                        const v = (opt.scores && opt.scores[k]) ? opt.scores[k] : 0;
-                        if (v > qMax) qMax = v;
-                    });
-                    trueMax[k] += qMax;
-                });
+function showLoading() {
+    switchScreen("loading-screen");
+    const msgs = [
+        "正在连接T神数据库……",
+        "分析你的呆傻程度……",
+        "计算卖队友概率……",
+        "评估无逻辑指数……",
+        "生成你的T神人格……"
+    ];
+    let i = 0;
+    const el = document.getElementById("loading-text");
+    el.textContent = msgs[0];
+    const iv = setInterval(() => {
+        i++;
+        if (i < msgs.length) {
+            el.style.opacity = "0";
+            setTimeout(() => { el.textContent = msgs[i]; el.style.opacity = "1"; }, 200);
+        } else {
+            clearInterval(iv);
+            const type = calcResult();
+            setTimeout(() => showResult(type), 400);
+        }
+    }, 700);
+}
 
-                // 归一化用户得分到0-10
-                const normalizedScores = {};
-                DIM_KEYS.forEach(k => {
-                    const denom = trueMax[k] || 1;
-                    normalizedScores[k] = Math.round((scores[k] / denom) * 10 * 10) / 10;
-                    normalizedScores[k] = Math.max(0, Math.min(10, normalizedScores[k]));
-                });
+function calcResult() {
+    const s = scores;
+    if (s.charm >= 75 && s.stupid <= 45 && s.betray <= 50 && s.lowEQ <= 45 && s.illogical <= 50 && s.cute >= 50) return "TGOD";
+    if (s.charm >= 80 && s.lowEQ <= 48 && s.stupid <= 50) return "SEXT";
+    if (s.cute >= 68 && s.stupid <= 45 && s.betray <= 50 && s.lowEQ <= 48) return "CT";
+    if (s.charm >= 60 && s.stupid >= 52 && s.cute >= 50) return "COOLT";
+    if (s.cute >= 60 && s.stupid >= 55) return "NAIT";
+    if (s.illogical >= 68) return "CHUNT";
+    if (s.betray >= 62 && s.annoying >= 55) return "SHIT";
+    if (s.stupid >= 60 && s.annoying >= 55) return "TANGT";
+    return "NAIT";
+}
 
-                // 计算与各类型的欧氏距离
-                let bestType = null;
-                let bestDist = Infinity;
-                let allDists = [];
-                for (const [typeId, typeData] of Object.entries(TSTI_TYPES)) {
-                    let distSq = 0;
-                    DIM_KEYS.forEach(k => {
-                        const diff = normalizedScores[k] - typeData.vector[k];
-                        distSq += diff * diff;
-                    });
-                    const dist = Math.sqrt(distSq);
-                    allDists.push({ id: typeId, dist: dist, data: typeData });
-                    if (dist < bestDist) {
-                        bestDist = dist;
-                        bestType = typeData;
-                    }
-                }
+function showResult(type) {
+    const r = results[type];
+    const m = resultMeta[type];
+    const c = m.color;
 
-                // 排序距离
-                allDists.sort((a, b) => a.dist - b.dist);
-                const secondBest = allDists.length > 1 ? allDists[1] : null;
-                const isClose = secondBest && (secondBest.dist - bestDist) < 0.8;
+    let dimHTML = "";
+    dimOrder.forEach((d,i) => {
+        const v = Math.max(0, Math.min(100, Math.round(scores[d])));
+        dimHTML += `
+        <div class="flex items-center gap-3 anim-fade" style="animation-delay:${.9+i*.1}s">
+            <span class="text-[11px] text-neutral-500 w-[72px] text-right shrink-0">${dimNames[d]}</span>
+            <div class="flex-1 h-[6px] bg-neutral-800 rounded-full overflow-hidden">
+                <div class="h-full rounded-full ${dimBars[d]} anim-bar" style="width:${v}%;animation-delay:${1.1+i*.1}s"></div>
+            </div>
+            <span class="text-[11px] text-neutral-400 w-9 text-right font-mono">${v}</span>
+        </div>`;
+    });
 
-                // 渲染结果
-                resultBadge.textContent = bestType.badge;
-                resultBadge.style.background = bestType.color + '22';
-                resultBadge.style.borderColor = bestType.color;
-                resultBadge.style.color = '#3d2e14';
-                resultName.textContent = bestType.name + ' · ' + bestType.tagline;
-                resultImage.src = './images/' + bestType.imageFile;
-                resultImage.alt = bestType.name + ' 图示';
-                resultImage.setAttribute('data-emoji', bestType.emoji);
-                resultImage.setAttribute('data-color', bestType.color);
-                resultDesc.innerHTML = bestType.desc;
+    let tagsHTML = r.traits.map(t =>
+        `<span class="px-3 py-1 rounded-full text-[11px]" style="border:1px solid ${c}33;color:${c};background:${c}0d">${t}</span>`
+    ).join("");
 
-                // 维度条形图
-                let barsHTML = '<h3>📊 维度分析</h3>';
-                DIM_KEYS.forEach(k => {
-                    const val = normalizedScores[k];
-                    const pct = Math.round(val * 10);
-                    barsHTML += `
-                        <div class="dim-row">
-                            <span class="dim-label">${DIM_LABELS[k]}</span>
-                            <div class="dim-bar-bg">
-                                <div class="dim-bar-fill ${DIM_COLORS[k]}" style="width:${pct}%;"></div>
-                            </div>
-                            <span class="dim-score">${val.toFixed(1)}</span>
-                        </div>`;
-                });
-                dimensionBars.innerHTML = barsHTML;
+    // Find top 2 dimensions
+    const sorted = dimOrder.slice().sort((a,b) => scores[b] - scores[a]);
+    const topDim = dimNames[sorted[0]];
+    const topVal = Math.max(0,Math.min(100,Math.round(scores[sorted[0]])));
+    const secDim = dimNames[sorted[1]];
+    const secVal = Math.max(0,Math.min(100,Math.round(scores[sorted[1]])));
 
-                // 临界提示
-                if (isClose && secondBest) {
-                    closenessNote.textContent =
-                        `⚠ 你的测试结果与「${secondBest.data.name}」也非常接近，你可能是混合型T神人格。`;
-                } else {
-                    closenessNote.textContent =
-                        `✨ 你的TSTI类型特征非常鲜明，是典型的${bestType.name}。`;
-                }
+    document.getElementById("result-content").innerHTML = `
+        <div class="text-center">
+            <div class="anim-clip inline-flex items-center gap-2 px-4 py-2 rounded-full text-[10px] tracking-widest uppercase mb-8" style="border:1px solid ${c}33;background:${c}0d;color:${c}">
+                <span class="w-2 h-2 rounded-full" style="background:${c}"></span>
+                你的T神人格
+            </div>
 
-                // 延迟触发条形图动画
-                setTimeout(() => {
-                    const fills = dimensionBars.querySelectorAll('.dim-bar-fill');
-                    fills.forEach(f => {
-                        const w = f.style.width;
-                        f.style.width = '0%';
-                        void f.offsetWidth;
-                        f.style.width = w;
-                    });
-                }, 150);
+            <!-- ★ 图片占位：结果主图 ★ -->
+            <div class="anim-clip d1 img-placeholder w-44 h-44 md:w-52 md:h-52 rounded-2xl mx-auto mb-8 flex flex-col items-center justify-center gap-2" style="animation:float 4s ease-in-out infinite">
+                <span class="iconify text-neutral-600" data-icon="solar:gallery-add-linear" data-width="28"></span>
+                <span class="text-[10px] text-neutral-600 leading-tight text-center px-4">插入「${r.name}」<br>代表图片</span>
+            </div>
 
-                showCard(resultCard);
-                document.getElementById('appContainer').scrollIntoView({ behavior: 'smooth' });
-            }
+            <div class="anim-clip d2 text-6xl md:text-8xl font-semibold tracking-tighter mb-2" style="color:${c}">${type}</div>
+            <h2 class="anim-clip d3 text-xl md:text-2xl font-medium tracking-tight mb-2">${r.name}</h2>
+            <p class="anim-fade d4 text-sm text-neutral-500 mb-6">${r.subtitle}</p>
+            <div class="anim-fade d5 flex flex-wrap justify-center gap-2 mb-4">
+                ${tagsHTML}
+            </div>
+            <p class="anim-fade d5 text-[11px] text-neutral-600 mb-10">
+                核心维度：${topDim} ${topVal}% · ${secDim} ${secVal}%
+            </p>
+        </div>
 
-            function handleImageFallback(img) {
-                // 如果图片加载失败，用emoji占位
-                const emoji = img.getAttribute('data-emoji') || '❓';
-                const color = img.getAttribute('data-color') || '#e8e0d2';
-                // 创建一个canvas绘制占位图
-                const canvas = document.createElement('canvas');
-                canvas.width = 200;
-                canvas.height = 200;
-                const ctx = canvas.getContext('2d');
-                // 背景
-                ctx.fillStyle = color + '33';
-                ctx.beginPath();
-                ctx.arc(100, 100, 96, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.strokeStyle = color;
-                ctx.lineWidth = 6;
-                ctx.stroke();
-                // emoji文字
-                ctx.fillStyle = '#3d2e14';
-                ctx.font = '72px serif';
-                ctx.textAlign = 'center';
-                ctx.textBaseline = 'middle';
-                ctx.fillText(emoji, 100, 100);
-                img.src = canvas.toDataURL();
-                img.classList.add('fallback-img');
-                img.onerror = null; // 防止无限循环
-            }
+        <!-- ★ 图片占位：横幅配图 ★ -->
+        <div class="anim-fade d7 img-placeholder w-full h-36 md:h-44 rounded-xl mb-10 flex flex-col items-center justify-center gap-2">
+            <span class="iconify text-neutral-600" data-icon="solar:gallery-wide-linear" data-width="28"></span>
+            <span class="text-[10px] text-neutral-600">插入「${r.name}」场景/横幅图片</span>
+        </div>
 
-            // ==================== 初始化 ====================
-            // 确保封面显示
-            showCard(coverCard);
+        <!-- Description -->
+        <div class="anim-fade d7 rounded-xl p-6 md:p-8 mb-8" style="background:#0a0a0a;border:1px solid #262626">
+            <h3 class="text-xs tracking-widest uppercase text-neutral-500 mb-4 flex items-center gap-2">
+                <span class="iconify" data-icon="solar:document-text-linear" data-width="14"></span>
+                人格解读
+            </h3>
+            <div class="text-sm text-neutral-300 leading-[1.8]">${r.description}</div>
+        </div>
 
-            // 预加载结果图片（可选）
-            // Object.values(TSTI_TYPES).forEach(t => {
-            //     const preload = new Image();
-            //     preload.src = './images/' + t.imageFile;
-            // });
+        <!-- Dimension Bars -->
+        <div class="anim-fade d10 rounded-xl p-6 md:p-8 mb-10" style="background:#0a0a0a;border:1px solid #262626">
+            <h3 class="text-xs tracking-widest uppercase text-neutral-500 mb-6 flex items-center gap-2">
+                <span class="iconify" data-icon="solar:chart-2-linear" data-width="14"></span>
+                七维分析
+            </h3>
+            <div class="space-y-3">${dimHTML}</div>
+        </div>
 
-            // console.log('🧪 TSTI · T神人格测试已就绪');
-            // console.log('📁 图片路径: ./images/');
-            // console.log('🖼  请放置以下图片: nait.png, tangt.png, ct.png, shit.png, chunt.png, coolt.png, sext.png, tgod.png');
-            // console.log('💡 如果图片缺失，将自动使用emoji占位符。');
-        })();
-    </script>
+        <!-- Actions -->
+        <div class="anim-fade d10 flex flex-col sm:flex-row items-center justify-center gap-4">
+            <button onclick="restart()" class="px-8 py-4 bg-white text-black text-xs font-medium tracking-widest uppercase rounded-sm hover:bg-rose-500 hover:text-white transition-all duration-300">
+                重新测试
+            </button>
+            <button onclick="copyResult('${type}','${r.name}')" id="copy-btn" class="px-8 py-4 text-xs font-medium tracking-widest uppercase rounded-sm border border-neutral-800 text-neutral-400 hover:border-neutral-600 hover:text-white transition-all duration-300">
+                复制结果
+            </button>
+        </div>
+
+        <p class="anim-fade d10 text-center mt-8 text-[10px] text-neutral-600">
+            * 本测试纯属娱乐，结果不代表任何真实评价<br>测试你的朋友们，看看谁是真正的T神
+        </p>
+    `;
+    switchScreen("result-screen");
+}
+
+function restart() {
+    switchScreen("welcome");
+}
+
+function copyResult(type, name) {
+    const text = `我的TSTI人格是 ${type}（${name}）！快来测测你的T神人格吧~`;
+    navigator.clipboard.writeText(text).then(() => {
+        showToast("已复制到剪贴板 ✓");
+    }).catch(() => {
+        showToast("复制失败，请手动复制");
+    });
+}
+
+function showToast(msg) {
+    const old = document.querySelector(".toast");
+    if (old) old.remove();
+    const t = document.createElement("div");
+    t.className = "toast";
+    t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(() => {
+        t.style.opacity = "0";
+        t.style.transition = "opacity .3s";
+        setTimeout(() => t.remove(), 300);
+    }, 2000);
+}
+</script>
 </body>
 </html>
