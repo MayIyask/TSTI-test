@@ -27,8 +27,6 @@
         .option-btn:hover{border-color:#f43f5e;background:rgba(244,63,94,.05);transform:translateX(4px)}
         .option-btn:active{transform:translateX(4px) scale(.98)}
         .progress-fill{background:linear-gradient(90deg,#f43f5e,#e11d48);transition:width .5s cubic-bezier(.16,1,.3,1)}
-        .img-placeholder{border:2px dashed #404040;background:#0a0a0a;transition:border-color .3s}
-        .img-placeholder:hover{border-color:#525252}
         .grid-bg{background-image:linear-gradient(#fff 1px,transparent 1px),linear-gradient(90deg,#fff 1px,transparent 1px);background-size:50px 50px;opacity:.03}
         .bar-cute{background:linear-gradient(90deg,#fb923c,#f97316)}
         .bar-stupid{background:linear-gradient(90deg,#facc15,#eab308)}
@@ -37,6 +35,10 @@
         .bar-illogical{background:linear-gradient(90deg,#4ade80,#22c55e)}
         .bar-charm{background:linear-gradient(90deg,#f472b6,#ec4899)}
         .bar-annoying{background:linear-gradient(90deg,#78716c,#57534e)}
+        .result-img-main{width:11rem;height:11rem;border-radius:1rem;object-fit:cover;animation:float 4s ease-in-out infinite}
+        @media(min-width:768px){.result-img-main{width:13rem;height:13rem}}
+        .result-img-banner{width:100%;height:11rem;border-radius:.75rem;object-fit:cover}
+        @media(min-width:768px){.result-img-banner{height:11rem}}
         ::-webkit-scrollbar{width:4px}::-webkit-scrollbar-track{background:transparent}::-webkit-scrollbar-thumb{background:#333;border-radius:2px}
         .q-area{transition:opacity .3s ease,transform .3s cubic-bezier(.16,1,.3,1)}
         .toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%);padding:.75rem 1.5rem;background:#262626;color:#e5e5e5;font-size:.75rem;border-radius:.5rem;z-index:999;animation:fadeIn .3s ease}
@@ -113,14 +115,13 @@
     </div>
 
 <script>
-// ===================== DATA =====================
 const questions = [
     {
         text: "你的队友在团战中残血了，你会？",
         options: [
             { text: "马上去救ta结果自己先死了", s: {cute:7,betray:-7,annoying:-3} },
             { text: "冷静地报假点", s: {annoying:8,lowEQ:5} },
-            { text: "大喊妈的我草", s: {stupid:7,illogical:7,cute:3} },
+            { text: "大喊我草妈的", s: {stupid:7,illogical:7,cute:3} },
             { text: "优雅地走位，顺手救一下", s: {charm:8,stupid:-3,cute:3} }
         ]
     },
@@ -228,7 +229,7 @@ const questions = [
         options: [
             { text: "先道歉，即使不是自己的错", s: {cute:5,annoying:-4,lowEQ:-5} },
             { text: "绝不道歉，错也不道", s: {annoying:8,lowEQ:7,betray:4} },
-            { text: "「我觉得吧……这个事情吧……就是……那个……」", s: {illogical:8,stupid:6} },
+            { text: "关我啥事啊", s: {illogical:8,stupid:6} },
             { text: "理性分析问题，找到双方都能接受的方案", s: {charm:8,illogical:-5,stupid:-5,lowEQ:-4} }
         ]
     },
@@ -236,7 +237,7 @@ const questions = [
         text: "你在考试时的状态是？",
         options: [
             { text: "飞速做完题然后去找老师对答案。", s: {cute:4,stupid:-5} },
-            { text: "全蒙C，性价比最高", s: {stupid:8,illogical:7} },
+            { text: "全蒙C", s: {stupid:8,illogical:7} },
             { text: "交白卷但画了一幅绝美的画", s: {illogical:7,stupid:5,cute:2} },
             { text: "轻松做完，提前交卷", s: {charm:8,stupid:-5} }
         ]
@@ -255,7 +256,7 @@ const questions = [
         options: [
             { text: "偶尔发自拍和日常，温暖治愈", s: {cute:5,annoying:-4} },
             { text: "天天发抱怨贴，负能量拉满", s: {annoying:8,lowEQ:7} },
-            { text: "发的东西没人看得懂，像加密通话", s: {illogical:8,stupid:6} },
+            { text: "发送外星语言中", s: {illogical:8,stupid:6} },
             { text: "偶尔发一条，每条都很有品味", s: {charm:8,annoying:-4,illogical:-4} }
         ]
     },
@@ -273,7 +274,7 @@ const questions = [
         options: [
             { text: "讲个冷笑话化解，效果看运气", s: {cute:5,lowEQ:-4} },
             { text: "直接逃跑，三十六计走为上", s: {stupid:6,cute:5} },
-            { text: "假装没发生，开始说完全不相关的事", s: {illogical:7,annoying:5} },
+            { text: "*唐笑*", s: {illogical:7,annoying:5} },
             { text: "自嘲一下，瞬间化解所有人尴尬", s: {charm:8,stupid:-4,lowEQ:-4} }
         ]
     },
@@ -282,7 +283,7 @@ const questions = [
         options: [
             { text: "虚心接受，表示感谢", s: {cute:6,lowEQ:-6,annoying:-4} },
             { text: "立刻怼回去，绝不认怂", s: {lowEQ:8,annoying:8,betray:4} },
-            { text: "「你说得对，但是……嗯……那个……」", s: {stupid:7,illogical:6,cute:2} },
+            { text: "你说得对，但是", s: {stupid:7,illogical:6,cute:2} },
             { text: "微笑听完，然后优雅地解释自己的思路", s: {charm:8,lowEQ:-5,illogical:-4} }
         ]
     },
@@ -323,7 +324,7 @@ const results = {
         description: "你是一坨行走的……算了，你的名字已经说明了一切。你视队友为草芥，卖队友的速度比打敌人还快。你在团队中的存在感基本为零——不对，是负数。因为你不仅不贡献，还会主动从内部瓦解团队的战斗力。<br><br>团战你第一个跑，资源你第一个抢，锅你第一个甩。如果有一天你的队友们集体消失，不要惊讶，他们只是终于做出了正确的选择——远离你。<br><br>建议：认真反思。非常认真非常认真地反思。如果反思不出来为什么，那说明问题比你想的还严重。"
     },
     CHUNT: {
-        name: " 傻逼t神",
+        name: "春虫t神",
         subtitle: "说话毫无逻辑，活在自己的世界里",
         traits: ["逻辑断裂", "脑回路清奇", "自成一派", "谜语人", "思维跳跃"],
         description: "你的大脑运作方式至今是个未解之谜。你说出的话前后矛盾、逻辑断裂，有时候连你自己都不知道自己在说什么。但神奇的是，你似乎对此毫无察觉，还觉得自己说得挺有道理。<br><br>你活在属于自己的逻辑世界里，那个世界的规则和现实世界完全不兼容。和你聊天就像在做阅读理解，而且是没有标准答案、没有提示、连题目都可能看错的那种。你的思维跳跃程度堪比量子力学。<br><br>建议：尝试在说话之前先想三秒。就三秒。如果三秒之后你还是不知道自己要说什么，那就……再想三秒。"
@@ -363,11 +364,9 @@ const dimNames = { cute:"可爱值", stupid:"弱智程度", betray:"卖队友程
 const dimBars = { cute:"bar-cute", stupid:"bar-stupid", betray:"bar-betray", lowEQ:"bar-lowEQ", illogical:"bar-illogical", charm:"bar-charm", annoying:"bar-annoying" };
 const dimOrder = ["cute","stupid","betray","lowEQ","illogical","charm","annoying"];
 
-// ===================== STATE =====================
 let currentQ = 0;
 let scores = { cute:50, stupid:50, betray:50, lowEQ:50, illogical:50, charm:50, annoying:50 };
 
-// ===================== FUNCTIONS =====================
 function switchScreen(id) {
     ["welcome","question-screen","loading-screen","result-screen"].forEach(s => {
         document.getElementById(s).classList.add("hidden");
@@ -459,6 +458,7 @@ function showResult(type) {
     const r = results[type];
     const m = resultMeta[type];
     const c = m.color;
+    const key = type.toLowerCase();
 
     let dimHTML = "";
     dimOrder.forEach((d,i) => {
@@ -477,7 +477,6 @@ function showResult(type) {
         `<span class="px-3 py-1 rounded-full text-[11px]" style="border:1px solid ${c}33;color:${c};background:${c}0d">${t}</span>`
     ).join("");
 
-    // Find top 2 dimensions
     const sorted = dimOrder.slice().sort((a,b) => scores[b] - scores[a]);
     const topDim = dimNames[sorted[0]];
     const topVal = Math.max(0,Math.min(100,Math.round(scores[sorted[0]])));
@@ -491,10 +490,13 @@ function showResult(type) {
                 你的T神人格
             </div>
 
-            <!-- ★ 图片占位：结果主图 ★ -->
-            <div class="anim-clip d1 img-placeholder w-44 h-44 md:w-52 md:h-52 rounded-2xl mx-auto mb-8 flex flex-col items-center justify-center gap-2" style="animation:float 4s ease-in-out infinite">
-                <span class="iconify text-neutral-600" data-icon="solar:gallery-add-linear" data-width="28"></span>
-                <span class="text-[10px] text-neutral-600 leading-tight text-center px-4">插入「${r.name}」<br>代表图片</span>
+            <!-- ★ 结果主图 -->
+            <div class="anim-clip d1 mb-8 flex justify-center">
+                <img src="./images/${key}-main.png" alt="${r.name}" class="result-img-main" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+                <div class="w-44 h-44 md:w-52 md:h-52 rounded-2xl border-2 border-dashed border-neutral-700 bg-neutral-900/50 items-center justify-center gap-2 flex-col" style="display:none;animation:float 4s ease-in-out infinite">
+                    <span class="iconify text-neutral-600" data-icon="solar:gallery-add-linear" data-width="28"></span>
+                    <span class="text-[10px] text-neutral-600 text-center px-4">放置 ${key}-main.png</span>
+                </div>
             </div>
 
             <div class="anim-clip d2 text-6xl md:text-8xl font-semibold tracking-tighter mb-2" style="color:${c}">${type}</div>
@@ -508,10 +510,13 @@ function showResult(type) {
             </p>
         </div>
 
-        <!-- ★ 图片占位：横幅配图 ★ -->
-        <div class="anim-fade d7 img-placeholder w-full h-36 md:h-44 rounded-xl mb-10 flex flex-col items-center justify-center gap-2">
-            <span class="iconify text-neutral-600" data-icon="solar:gallery-wide-linear" data-width="28"></span>
-            <span class="text-[10px] text-neutral-600">插入「${r.name}」场景/横幅图片</span>
+        <!-- ★ 场景横幅图 -->
+        <div class="anim-fade d7 mb-10">
+            <img src="./images/${key}-banner.png" alt="${r.name}场景" class="result-img-banner" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+            <div class="w-full h-36 md:h-44 rounded-xl border-2 border-dashed border-neutral-700 bg-neutral-900/50 items-center justify-center gap-2 flex-col" style="display:none">
+                <span class="iconify text-neutral-600" data-icon="solar:gallery-wide-linear" data-width="28"></span>
+                <span class="text-[10px] text-neutral-600">放置 ${key}-banner.png</span>
+            </div>
         </div>
 
         <!-- Description -->
